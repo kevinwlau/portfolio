@@ -13,7 +13,9 @@
 #   limitations under the License.
 
 # FROM openliberty/open-liberty:microProfile1
-FROM websphere-liberty:microProfile
+# FROM websphere-liberty:microProfile
+# This is what JAG said to use to build locally
+FROM websphere-liberty:18.0.0.3-webProfile7
 
 COPY /target/liberty/wlp/usr/servers/defaultServer /config/
 
