@@ -13,15 +13,20 @@
 #   limitations under the License.
 
 # FROM openliberty/open-liberty:microProfile1
-# FROM websphere-liberty:microProfile
+FROM websphere-liberty:microProfile
 # This is what JAG said to use to build locally
-FROM websphere-liberty:18.0.0.3-webProfile7
+#FROM websphere-liberty:18.0.0.3-webProfile7
 
 COPY /target/liberty/wlp/usr/servers/defaultServer /config/
 
 ## Copy in portfolio prereqs:
 COPY lib/db2jcc4.jar /config/db2jcc4.jar
 COPY lib/wmq.jmsra.rar /config/wmq.jmsra.rar
+
+# Changes recommended from Microclimate troubleshooting
+USER root
+RUN chmod g+w /config/apps
+USER 1001
 
 RUN installUtility install --acceptLicense defaultServer
 # Upgrade to production license if URL to JAR provided
